@@ -6,6 +6,9 @@
  * Licensed under the GPL license.
  */
 
+var templateContent = '';
+var templateCount = 0;
+
 module.exports = function(grunt) {
 
   // Please see the grunt documentation for more information regarding task and
@@ -15,16 +18,29 @@ module.exports = function(grunt) {
   // TASKS
   // ==========================================================================
 
-  grunt.registerTask('mustache', 'Your task description goes here.', function() {
-    grunt.log.write(grunt.helper('mustache'));
+  grunt.registerMultiTask('mustache', 'Concat mustache templates into a JSON string.', function() {
+    var mustachePath    = this.file.src;
+    var mustacheDest    = this.file.dest;    
+    var templateOutput  = '';
+
+    templateOutput      += 'SB.TMPL = {';
+
+    grunt.file.recurse(mustachePath,grunt.helper('mustache'));    
+
+    templateOutput += templateContent.replace( /\r|\n|\t|\s\s/g, "");
+
+    templateOutput += '"done":true};';
+
+    grunt.file.write(mustacheDest, templateOutput);
   });
 
   // ==========================================================================
   // HELPERS
   // ==========================================================================
 
-  grunt.registerHelper('mustache', function() {
-    return 'mustache!!!';
+  grunt.registerHelper('readTemplateFile', function(abspath, rootdir, subdir, filename) {
+    templateCount++;
+    templateContent += ;'"' + filename.replace('.mustache','') + '"' + " : '" + grunt.file.read(abspath) + "',"
   });
 
 };
