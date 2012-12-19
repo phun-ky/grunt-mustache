@@ -2,7 +2,7 @@
  * grunt-mustache
  * https://github.com/phun-ky/grunt-mustache
  *
- * Copyright (c) 2012 Alexander Vassbotn R�yne-Helgesen
+ * Copyright (c) 2012 Alexander Vassbotn Røyne-Helgesen
  * Modified 12/2012 Nils P. Ellingsen
  * Licensed under the GPL license.
  */
@@ -22,16 +22,16 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   grunt.registerMultiTask('mustache', 'Concat mustache templates into a JSON string.', function() {
+    grunt.config.requires('mustache.dist.options.varname');    
     var mustacheSrc    = grunt.file.expand(this.file.src);
     var mustacheDest    = this.file.dest;
     var templateOutput  = '';
-    
-    templateOutput      += 'SB.TMPL = {';
-    
+
+    var varName = grunt.config('mustache.dist.options.varname');
+
+    templateOutput += varName + ' = {';
     grunt.file.recurse(this.file.src, mustacheCallback);
-    
     templateOutput += templateContent.replace( /\r|\n|\t|\s\s/g, '');
-    
     templateOutput += '"done":true};';
     
     //grunt.log.writeln(templateOutput);
