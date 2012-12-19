@@ -2,9 +2,12 @@
  * grunt-mustache
  * https://github.com/phun-ky/grunt-mustache
  *
- * Copyright (c) 2012 Alexander Vassbotn R�yne-Helgesen
+ * Copyright (c) 2012 Alexander Vassbotn Røyne-Helgesen
+ * Modified 12/2012 Nils P. Ellingsen
  * Licensed under the GPL license.
  */
+
+'use strict';
 
 var templateContent = '';
 var templateCount = 0;
@@ -19,28 +22,33 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   grunt.registerMultiTask('mustache', 'Concat mustache templates into a JSON string.', function() {
-    var mustachePath    = this.file.src;
-    var mustacheDest    = this.file.dest;    
+    grunt.config.requires('mustache.dist.options.varname');    
+    var mustacheSrc    = grunt.file.expand(this.file.src);
+    var mustacheDest    = this.file.dest;
     var templateOutput  = '';
 
-    templateOutput      += 'SB.TMPL = {';
+    var varName = grunt.config('mustache.dist.options.varname');
 
-    grunt.file.recurse(mustachePath,grunt.helper('mustache'));    
-
-    templateOutput += templateContent.replace( /\r|\n|\t|\s\s/g, "");
-
+    templateOutput += varName + ' = {';
+    grunt.file.recurse(this.file.src, mustacheCallback);
+    templateOutput += templateContent.replace( /\r|\n|\t|\s\s/g, '');
     templateOutput += '"done":true};';
-
+    
+    //grunt.log.writeln(templateOutput);
     grunt.file.write(mustacheDest, templateOutput);
+    grunt.log.writeln('File "' + mustacheDest + '" created.');
   });
 
   // ==========================================================================
-  // HELPERS
+  // CALLBACKS
   // ==========================================================================
 
-  grunt.registerHelper('readTemplateFile', function(abspath, rootdir, subdir, filename) {
-    templateCount++;
-    templateContent += ;'"' + filename.replace('.mustache','') + '"' + " : '" + grunt.file.read(abspath) + "',"
-  });
+  function mustacheCallback(abspath, rootdir, subdir, filename){
+    if(abspath.indexOf('.svn') === -1){
+      templateCount++;
+      templateContent += '"' + filename.split('.mustache')[0] + '"' + " : '" + grunt.file.read(abspath) + "',";
+    }
+  }
+
 
 };
