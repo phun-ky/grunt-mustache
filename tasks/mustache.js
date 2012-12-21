@@ -69,7 +69,7 @@ module.exports = function(grunt) {
     if(abspath.indexOf('.mustache') != -1){
 
       templateCount++;
-      templateContent += '"' + filename.split('.mustache')[0] + '"' + " : '" + grunt.file.read(abspath) + "',";
+      templateContent += '"' + filename.split('.mustache')[0] + '"' + ' : "' + grunt.file.read(abspath) + '",';
     }
   }
 
