@@ -44,7 +44,7 @@ module.exports = function(grunt) {
       
       grunt.file.recurse( source, mustacheCallback);
       
-      templateOutput += templateContent.replace( /\r|\n|\t|\s\s/g, "");
+      _templateOutput += templateContent.replace( /\r|\n|\t|\s\s/g, "");
       
       
     });
