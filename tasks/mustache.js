@@ -22,32 +22,42 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   grunt.registerMultiTask('mustache', 'Concat mustache templates into a JSON string.', function() {
-    grunt.config.requires('mustache.dist.options.varname'); 
 
-    var mustacheSrc    = grunt.file.expand(this.file.src);
-    var mustacheDest    = this.file.dest;
-    var templateOutput  = '';
-
-    var varName = grunt.config('mustache.dist.options.varname');
-
-    // If a varName is specified, use it, if not, just create a JSON string
-    if(typeof varName !== 'undefined'){
-      templateOutput += varName + ' = {';  
-    } else {
-      templateOutput += '{';
-    }
+    grunt.config.requires('mustache.files.options.prefix'); 
+    grunt.config.requires('mustache.files.options.postfix'); 
 
     
-    grunt.file.recurse(this.file.src, mustacheCallback);
-    templateOutput += templateContent.replace( /\r|\n|\t|\s\s/g, '');
-    templateOutput += '"done": "true"}';
+    var _mustacheDest     = this.file.dest;
+    var _templateOutput   = '';
+    var _prefix           = grunt.config('mustache.files.options.prefix');
+    var _postfix          = grunt.config('mustache.files.options.postfix');
 
-    if(typeof varName !== 'undefined'){
-      templateOutput += ';';
+    // Append prefix if set
+    if(typeof _prefix !== 'undefined'){
+      _templateOutput += _prefix;  
+    } 
+    
+    _templateOutput += '{';   
+    
+    
+    this.data.src.forEach(function(source){        
+      
+      grunt.file.recurse( source, mustacheCallback);
+      
+      templateOutput += templateContent.replace( /\r|\n|\t|\s\s/g, "");
+      
+      
+    });
+
+    templateContent = '';
+    _templateOutput += '"done": "true"}';
+
+    if(typeof _postfix !== 'undefined'){
+      _templateOutput += _postfix;
     }     
     
-    grunt.file.write(mustacheDest, templateOutput);
-    grunt.log.writeln('File "' + mustacheDest + '" created.');
+    grunt.file.write(_mustacheDest, _templateOutput);
+    grunt.log.writeln('File "' + _mustacheDest + '" created.');
   });
 
   // ==========================================================================
@@ -55,7 +65,9 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   function mustacheCallback(abspath, rootdir, subdir, filename){
+
     if(abspath.indexOf('.mustache') != -1){
+
       templateCount++;
       templateContent += '"' + filename.split('.mustache')[0] + '"' + " : '" + grunt.file.read(abspath) + "',";
     }

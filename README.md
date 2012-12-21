@@ -7,7 +7,7 @@ Install this grunt plugin next to your project's [grunt.js gruntfile][getting_st
 
 `npm install grunt-mustache`
 
-Then add this line to your project's `grunt.js` gruntfile:
+Then add this line to your project's `Gruntfile.js`:
 
 `grunt.loadNpmTasks('grunt-mustache');`
 
@@ -18,19 +18,20 @@ Then add this line to your project's `grunt.js` gruntfile:
 Add something like this in yer gruntfile:
 
 	mustache: {
-	  dist : {
+	  files : {
 	    src: 'src/main/webapp/js/mustache/',
 	    dest: 'src/main/webapp/js/src/templates.js',
 	    options: {
-	      varname: 'my.templates'
+	      postfix: 'my.templates = {',
+	      prefix: 	'};'
 	    }
 	  }
 	}
 
 
-Note: this generates a "custom" template-format in with the resulting JS has a Object whose name you specified in mustache.dist.options.varname:
+Note: If postfix/preficx options are set or not, you can either create a JS object, or just a pure JSON string:
 
-	my.templates = {'templatename': 'template-data' [...], 'done': true}
+	my.templates = {'templatename': 'template-data' [...], 'done': true};
 
 (this makes it easy to load our templates with JS).
 
@@ -38,6 +39,7 @@ Note: this generates a "custom" template-format in with the resulting JS has a O
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][grunt].
 
 ## Release History
+21/12/2012: Upgraded task to fit grunt v 0.4*, renamed old gruntfile and added postfix/prefix support for template generation. removed old config.varname functionality
 19/12/2012: Edited script for newer grunt-version (didn't get it to work quite right, replaced helper with callback, added some options for variable name + minor stuff)
 
 
