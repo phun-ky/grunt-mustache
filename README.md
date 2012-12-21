@@ -3,7 +3,7 @@
 A grunt plugin to concatinate mustache template files
 
 ## Getting Started
-Install this grunt plugin next to your project's [grunt.js gruntfile][getting_started] with: 
+Install this grunt plugin next to your project's [Gruntfile.js][getting_started] with: 
 
 `npm install grunt-mustache`
 
@@ -29,7 +29,7 @@ Add something like this in yer gruntfile:
 	}
 
 
-Note: If postfix/preficx options are set or not, you can either create a JS object, or just a pure JSON string:
+Note: If postfix/prefix options are set or not, you can either create a JS object, or just a pure JSON string:
 
 	my.templates = {'templatename': 'template-data' [...], 'done': true};
 
