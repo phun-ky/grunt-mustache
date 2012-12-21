@@ -22,19 +22,30 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   grunt.registerMultiTask('mustache', 'Concat mustache templates into a JSON string.', function() {
-    grunt.config.requires('mustache.dist.options.varname');    
+    grunt.config.requires('mustache.dist.options.varname'); 
+
     var mustacheSrc    = grunt.file.expand(this.file.src);
     var mustacheDest    = this.file.dest;
     var templateOutput  = '';
 
     var varName = grunt.config('mustache.dist.options.varname');
 
-    templateOutput += varName + ' = {';
+    // If a varName is specified, use it, if not, just create a JSON string
+    if(typeof varName !== 'undefined'){
+      templateOutput += varName + ' = {';  
+    } else {
+      templateOutput += '{';
+    }
+
+    
     grunt.file.recurse(this.file.src, mustacheCallback);
     templateOutput += templateContent.replace( /\r|\n|\t|\s\s/g, '');
-    templateOutput += '"done":true};';
+    templateOutput += '"done": "true"}';
+
+    if(typeof varName !== 'undefined'){
+      templateOutput += ';';
+    }     
     
-    //grunt.log.writeln(templateOutput);
     grunt.file.write(mustacheDest, templateOutput);
     grunt.log.writeln('File "' + mustacheDest + '" created.');
   });
@@ -44,7 +55,7 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   function mustacheCallback(abspath, rootdir, subdir, filename){
-    if(abspath.indexOf('.svn') === -1){
+    if(abspath.indexOf('.mustache') != -1){
       templateCount++;
       templateContent += '"' + filename.split('.mustache')[0] + '"' + " : '" + grunt.file.read(abspath) + "',";
     }
