@@ -50,7 +50,7 @@ module.exports = function(grunt) {
     });
 
     templateContent = '';
-    _templateOutput += '"done": "true"}';
+    _templateOutput += ' "done": "true"}';
 
     if(typeof _postfix !== 'undefined'){
       _templateOutput += _postfix;
