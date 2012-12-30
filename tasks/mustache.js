@@ -21,10 +21,7 @@ module.exports = function(grunt) {
   // TASKS
   // ==========================================================================
 
-  grunt.registerMultiTask('mustache', 'Concat mustache templates into a JSON string.', function() {
-
-    grunt.config.requires('mustache.files.options.prefix'); 
-    grunt.config.requires('mustache.files.options.postfix'); 
+  grunt.registerMultiTask('mustache', 'Concat mustache templates into a JSON string or JS object.', function() {
 
     
     var _mustacheDest     = this.file.dest;
@@ -34,17 +31,17 @@ module.exports = function(grunt) {
 
     // Append prefix if set
     if(typeof _prefix !== 'undefined'){
-      _templateOutput += _prefix;  
-    } 
+      _templateOutput += _prefix;
+    }
     
-    _templateOutput += '{';   
+    _templateOutput += '{';
     
     
-    this.data.src.forEach(function(source){        
+    this.data.src.forEach(function(source){
       
       grunt.file.recurse( source, mustacheCallback);
       
-      _templateOutput += templateContent.replace( /\r|\n|\t|\s\s/g, "");
+      _templateOutput += templateContent.replace( /\r|\n|\t|\s\s/g, '');
       
       
     });
@@ -54,7 +51,7 @@ module.exports = function(grunt) {
 
     if(typeof _postfix !== 'undefined'){
       _templateOutput += _postfix;
-    }     
+    }
     
     grunt.file.write(_mustacheDest, _templateOutput);
     grunt.log.writeln('File "' + _mustacheDest + '" created.');
@@ -65,9 +62,8 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   function mustacheCallback(abspath, rootdir, subdir, filename){
-
-    if(abspath.indexOf('.mustache') != -1){
-
+    // loop thru all mustache-files: using filename for key, template contents as value
+    if(abspath.indexOf('.mustache') !== -1){
       templateCount++;
       templateContent += '"' + filename.split('.mustache')[0] + '"' + " : '" + grunt.file.read(abspath) + "',";
     }
