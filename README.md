@@ -22,23 +22,27 @@ Add something like this in yer gruntfile:
 	    src: 'src/main/webapp/js/mustache/',
 	    dest: 'src/main/webapp/js/src/templates.js',
 	    options: {
-	      postfix: 'my.templates = {',
-	      prefix: 	'};'
+	      prefix: 'my.templates = ',
+	      postfix: ';'
 	    }
 	  }
 	}
 
 
-Note: If postfix/prefix options are set or not, you can either create a JS object, or just a pure JSON string:
+Note: If postfix/prefix options are set or not, you can either create a JS object;
 
 	my.templates = {'templatename': 'template-data' [...], 'done': true};
 
-(this makes it easy to load our templates with JS).
+or a pure JSON-string:
+
+	{'templatename': 'template-data' [...], 'done', true}
+
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][grunt].
 
 ## Release History
+30/12/2012: Minor tweaks: removed requirement for postfix/prefix option, trailing whitespace cleanup, updated docs (nilsel)
 21/12/2012: Upgraded task to fit grunt v 0.4*, renamed old gruntfile and added postfix/prefix support for template generation. removed old config.varname functionality
 19/12/2012: Edited script for newer grunt-version (didn't get it to work quite right, replaced helper with callback, added some options for variable name + minor stuff)
 
