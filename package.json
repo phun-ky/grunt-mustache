@@ -41,5 +41,8 @@
     "grunt",
     "templating",
     "template"
-  ]
+  ],
+  "contributors" : {
+    "name" : "Nils Petter Ellingsen"
+  }
 }
