@@ -42,8 +42,14 @@ or a pure JSON-string:
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][grunt].
 
 ## Release History
+_(Until v1.0.0, this will only be updated when major or breaking changes are made)_
+
+01/01/2013: Pull request merged for some linting fixes and updates for readme
+
 30/12/2012: Minor tweaks: removed requirement for postfix/prefix option, trailing whitespace cleanup, updated docs (nilsel)
+
 21/12/2012: Upgraded task to fit grunt v 0.4*, renamed old gruntfile and added postfix/prefix support for template generation. removed old config.varname functionality
+
 19/12/2012: Edited script for newer grunt-version (didn't get it to work quite right, replaced helper with callback, added some options for variable name + minor stuff)
 
 
