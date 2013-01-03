@@ -1,6 +1,6 @@
 # grunt-mustache
 
-A grunt plugin to concatinate mustache template files
+> A grunt plugin to concatinate mustache template files
 
 ## Getting Started
 Install this grunt plugin next to your project's [Gruntfile.js][getting_started] with: 
