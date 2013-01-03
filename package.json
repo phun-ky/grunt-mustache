@@ -42,7 +42,7 @@
     "templating",
     "template"
   ],
-  "contributors" : {
+  "contributors" : [{
     "name" : "Nils Petter Ellingsen"
-  }
+  }]
 }
