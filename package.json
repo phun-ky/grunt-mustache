@@ -20,14 +20,7 @@
       "type": "GPL",
       "url": "https://github.com/phun-ky/grunt-mustache/blob/master/LICENSE-GPL"
     }
-  ],
-  "main": "grunt.js",  
-  "engines": {
-    "node": "*"
-  },
-  "scripts": {
-    "test": "grunt test"
-  },  
+  ],  
   "devDependencies": {
     "grunt": "~0.4.0rc5"
   },
