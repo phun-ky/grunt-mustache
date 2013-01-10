@@ -24,7 +24,7 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('mustache', 'Concat mustache templates into a JSON string or JS object.', function() {
 
     
-    var _mustacheDest     = this.file.dest;
+    var _mustacheDest     = this.data.dest;
     var _templateOutput   = '';
     var _prefix           = grunt.config('mustache.files.options.prefix');
     var _postfix          = grunt.config('mustache.files.options.postfix');
@@ -37,7 +37,7 @@ module.exports = function(grunt) {
     _templateOutput += '{';
     
     
-    this.data.src.forEach(function(source){
+    this.filesSrc.forEach(function(source){
       
       grunt.file.recurse( source, mustacheCallback);
       
