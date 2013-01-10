@@ -54,7 +54,7 @@ module.exports = function(grunt) {
     }
     
     grunt.file.write(_mustacheDest, _templateOutput);
-    grunt.log.writeln('File "' + _mustacheDest + '" created.');
+    grunt.log.ok('File "' + _mustacheDest + '" created.');
   });
 
   // ==========================================================================
