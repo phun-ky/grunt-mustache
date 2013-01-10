@@ -21,8 +21,7 @@
       "url": "https://github.com/phun-ky/grunt-mustache/blob/master/LICENSE-GPL"
     }
   ],
-  "main": "grunt.js",
-  "bin": "bin/grunt-mustache",
+  "main": "grunt.js",  
   "engines": {
     "node": "*"
   },
