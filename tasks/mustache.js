@@ -12,6 +12,8 @@
 var templateContent = '';
 var templateCount = 0;
 
+var colors = require('colors');
+
 module.exports = function(grunt) {
 
   // Please see the grunt documentation for more information regarding task and
@@ -23,27 +25,33 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('mustache', 'Concat mustache templates into a JSON string or JS object.', function() {
 
-    
     var _mustacheDest     = this.data.dest;
     var _templateOutput   = '';
-    var _prefix           = grunt.config('mustache.files.options.prefix');
-    var _postfix          = grunt.config('mustache.files.options.postfix');
+
+    var _opts = this.options();
+
+    var _prefix           = _opts.prefix;
+    var _postfix          = _opts.postfix;
 
     // Append prefix if set
     if(typeof _prefix !== 'undefined'){
       _templateOutput += _prefix;
     }
-    
+
     _templateOutput += '{';
-    
-    
-    this.filesSrc.forEach(function(source){
-      
-      grunt.file.recurse( source, mustacheCallback);
-      
+
+
+    this.filesSrc.forEach(function(file){
+
+
+
+      grunt.file.recurse( file, function(abspath, rootdir, subdir, filename){
+        mustacheCallback(abspath, filename,_opts);
+      });
+
       _templateOutput += templateContent.replace( /\r|\n|\t|\s\s/g, '');
-      
-      
+
+
     });
 
     templateContent = '';
@@ -52,20 +60,31 @@ module.exports = function(grunt) {
     if(typeof _postfix !== 'undefined'){
       _templateOutput += _postfix;
     }
-    
+
     grunt.file.write(_mustacheDest, _templateOutput);
-    grunt.log.ok('File "' + _mustacheDest + '" created.');
+
+    if(_opts.verbose){
+
+      grunt.log.writeln('File "' + _mustacheDest.yellow + '" created.');
+    }
+
+    grunt.log.ok(String(templateCount).cyan + ' *.mustache templates baked into ' + _mustacheDest.yellow);
   });
 
   // ==========================================================================
   // CALLBACKS
   // ==========================================================================
 
-  function mustacheCallback(abspath, rootdir, subdir, filename){
+  function mustacheCallback(abspath, filename, opts){
     // loop thru all mustache-files: using filename for key, template contents as value
     if(abspath.indexOf('.mustache') !== -1){
       templateCount++;
       templateContent += '"' + filename.split('.mustache')[0] + '"' + " : '" + grunt.file.read(abspath) + "',";
+
+       if(opts.verbose){
+
+        grunt.log.writeln('Reading file: '.white + filename.yellow);
+      }
     }
   }
 
