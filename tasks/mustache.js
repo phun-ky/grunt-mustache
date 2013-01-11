@@ -77,12 +77,11 @@ module.exports = function(grunt) {
 
   function mustacheCallback(abspath, filename, opts){
     // loop thru all mustache-files: using filename for key, template contents as value
-    if(abspath.indexOf('.mustache') !== -1){
+    if(abspath.split('.').pop() === 'mustache'){
       templateCount++;
-      templateContent += '"' + filename.split('.mustache')[0] + '"' + " : '" + grunt.file.read(abspath) + "',";
+      templateContent += '"' + filename.split('.mustache')[0] + '"' + ' : \'' + grunt.file.read(abspath) + '\',';
 
        if(opts.verbose){
-
         grunt.log.writeln('Reading file: '.white + filename.yellow);
       }
     }
