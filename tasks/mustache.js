@@ -38,7 +38,7 @@ module.exports = function(grunt) {
       _templateOutput += _prefix;
     }
 
-    _templateOutput += '{';
+    _templateOutput += '({';
 
 
     this.filesSrc.forEach(function(file){
@@ -55,7 +55,7 @@ module.exports = function(grunt) {
     });
 
     templateContent = '';
-    _templateOutput += ' "done": "true"}';
+    _templateOutput += ' "done": "true"})';
 
     if(typeof _postfix !== 'undefined'){
       _templateOutput += _postfix;
