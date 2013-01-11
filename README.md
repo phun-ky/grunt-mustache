@@ -15,7 +15,7 @@ Then add this line to your project's `Gruntfile.js`:
 [getting_started]: https://github.com/gruntjs/grunt/wiki/Getting-started
 
 ## Documentation
-Add something like this in yer gruntfile:
+Add something like this in your gruntfile:
 
 	mustache: {
 	  files : {
@@ -23,7 +23,8 @@ Add something like this in yer gruntfile:
 	    dest: 'src/main/webapp/js/src/templates.js',
 	    options: {
 	      prefix: 'my.templates = ',
-	      postfix: ';'
+	      postfix: ';',
+	      verbose: true
 	    }
 	  }
 	}
