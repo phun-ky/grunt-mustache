@@ -32,12 +32,13 @@ Add something like this in your gruntfile:
 
 Note: If postfix/prefix options are set or not, you can either create a JS object;
 
-	my.templates = {'templatename': 'template-data' [...], 'done': true};
+	my.templates = {"templatename": 'template-data' [...], "done": "true"};
 
-or a pure JSON-string:
+or a JSON-ish-string:
 
-	{'templatename': 'template-data' [...], 'done', true}
+	({"templatename": 'template-data' [...], "done", "true"})
 
+> The parenthesis are there to produce a valid JavaScript file. In the future we might change this to write a JSON file if no pre/post-fix is set.
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][grunt].
