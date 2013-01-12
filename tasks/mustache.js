@@ -30,16 +30,12 @@ module.exports = function(grunt) {
 
     var _opts = this.options();
 
-    var _prefix           = _opts.prefix;
-    var _postfix          = _opts.postfix;
+    // Set *fixes, if not set, use () to produce correct JavaScript syntax
+    var _prefix           = _opts.prefix || '(';
+    var _postfix          = _opts.postfix || ')';
 
-    // Append prefix if set
-    if(typeof _prefix !== 'undefined'){
-      _templateOutput += _prefix;
-    }
-
-    _templateOutput += '({';
-
+    
+    _templateOutput += _prefix + '{';
 
     this.filesSrc.forEach(function(file){
 
@@ -48,18 +44,12 @@ module.exports = function(grunt) {
       grunt.file.recurse( file, function(abspath, rootdir, subdir, filename){
         mustacheCallback(abspath, filename,_opts);
       });
-
+      // replace any tabs and linebreaks and double spaces
       _templateOutput += templateContent.replace( /\r|\n|\t|\s\s/g, '');
-
-
     });
 
     templateContent = '';
-    _templateOutput += ' "done": "true"})';
-
-    if(typeof _postfix !== 'undefined'){
-      _templateOutput += _postfix;
-    }
+    _templateOutput += ' "done": "true"}' + _postfix;
 
     grunt.file.write(_mustacheDest, _templateOutput);
 

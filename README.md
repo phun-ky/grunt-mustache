@@ -40,6 +40,26 @@ or a JSON-ish-string:
 
 > The parenthesis are there to produce a valid JavaScript file. In the future we might change this to write a JSON file if no pre/post-fix is set.
 
+### Options
+
+#### prefix
+* Type: `String`
+* Defaults: `(`
+
+String to prepend the generated string. Defaults to `(` to give a valid JavaScript string.
+
+#### postfix
+* Type: `String`
+* Defaults: `)`
+
+String to append the generated string. Defaults to `)` to give a valid JavaScript string.
+
+#### verbose
+* Type: `Boolean`
+* Defaults: `false`
+
+Toggle for verbose output.
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][grunt].
 
