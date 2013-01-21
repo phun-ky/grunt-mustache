@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/phun-ky/grunt-mustache.png)](https://travis-ci.org/phun-ky/grunt-mustache)
 # grunt-mustache
 
 > A grunt plugin to concatinate mustache template files into a valid JavaScript syntax file

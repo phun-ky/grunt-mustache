@@ -8,6 +8,9 @@
     "email": "alexander@phun-ky.net",
     "url": "http://phun-ky.net"
   },
+  "scripts": {
+    "test": "grunt test"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/phun-ky/grunt-mustache.git"
@@ -20,12 +23,13 @@
       "type": "GPL",
       "url": "https://github.com/phun-ky/grunt-mustache/blob/master/LICENSE-GPL"
     }
-  ],  
-  "dependencies":{
+  ],
+  "dependencies": {
     "colors": "~0.6.0-1"
   },
   "devDependencies": {
-    "grunt": "~0.4.0rc5"
+    "grunt": "~0.4.0rc6",
+    "grunt-contrib-nodeunit": "~0.1.2rc6"
   },
   "keywords": [
     "gruntplugin",
@@ -34,7 +38,9 @@
     "templating",
     "template"
   ],
-  "contributors" : [{
-    "name" : "Nils Petter Ellingsen"
-  }]
+  "contributors": [
+    {
+      "name": "Nils Petter Ellingsen"
+    }
+  ]
 }

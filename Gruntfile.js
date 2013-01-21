@@ -2,8 +2,8 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    test: {
-      files: ['test/**/*.js']
+    nodeunit: {
+      all: ['test/test.js']
     },
     lint: {
       files: ['grunt.js', 'tasks/**/*.js', 'test/**/*.js']
@@ -31,10 +31,13 @@ module.exports = function(grunt) {
     }
   });
 
+  grunt.loadNpmTasks('grunt-contrib-nodeunit');
+
   // Load local tasks.
   grunt.loadTasks('tasks');
 
   // Default task.
-  grunt.registerTask('default', 'lint test');
+  grunt.registerTask('default', 'lint');
+  grunt.registerTask('test', 'nodeunit');
 
 };
