@@ -1,12 +1,12 @@
 # grunt-mustache [![Build Status](https://travis-ci.org/phun-ky/grunt-mustache.png)](https://travis-ci.org/phun-ky/grunt-mustache)
 
-> A grunt plugin to concatinate mustache template files into a valid JavaScript syntax file.
+> A grunt plugin to concatenate mustache template files into a valid JavaScript syntax file.
 
 This plugin does *NOT* bake JSON data with mustache templates. This plugin is created to handle the template baking with mustache/handlebars
 within a web projects internal JavaScript methods.
 
 ## Getting Started
-Install this grunt plugin next to your project's [Gruntfile.js][getting_started] with: 
+Install this grunt plugin next to your project's [Gruntfile.js][getting_started] with:
 
 `npm install grunt-mustache`
 
@@ -81,5 +81,5 @@ _(Until v1.0.0, this will only be updated when major or breaking changes are mad
 
 
 ## License
-Copyright (c) 2012 Alexander Vassbotn Røyne-Helgesen  
+Copyright (c) 2012 Alexander Vassbotn Røyne-Helgesen
 Licensed under the GPL license.
