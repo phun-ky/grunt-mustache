@@ -1,3 +1,4 @@
+/*jslint node:true */
 /*
  * grunt-mustache
  * https://github.com/phun-ky/grunt-mustache
@@ -9,73 +10,27 @@
 
 'use strict';
 
-var templateContent = '';
-var templateCount = 0;
-
-var colors = require('colors');
+require('colors');
 
 module.exports = function(grunt) {
-
   // Please see the grunt documentation for more information regarding task and
   // helper creation: https://github.com/cowboy/grunt/blob/master/docs/toc.md
 
   // ==========================================================================
   // TASKS
   // ==========================================================================
-
-  grunt.registerMultiTask('mustache', 'Concat mustache templates into a JSON string or JS object.', function() {
-
-    var _mustacheDest     = this.data.dest;
-    var _templateOutput   = '';
-
-    var _opts = this.options();
-
-    // Set *fixes, if not set, use () to produce correct JavaScript syntax
-    var _prefix           = _opts.prefix || '(';
-    var _postfix          = _opts.postfix || ')';
-
-    
-    _templateOutput += _prefix + '{';
-
-    this.filesSrc.forEach(function(file){
+  var mustache = require('./lib/mustache.js').init(grunt);
 
 
-
-      grunt.file.recurse( file, function(abspath, rootdir, subdir, filename){
-        mustacheCallback(abspath, filename,_opts);
-      });
-      // replace any tabs and linebreaks and double spaces
-      _templateOutput += templateContent.replace( /\r|\n|\t|\s\s/g, '');
-    });
-
-    templateContent = '';
-    _templateOutput += ' "done": "true"}' + _postfix;
-
-    grunt.file.write(_mustacheDest, _templateOutput);
-
-    if(_opts.verbose){
-
-      grunt.log.writeln('File "' + _mustacheDest.yellow + '" created.');
+  grunt.registerMultiTask('mustache',
+                          'Concat mustache templates into a JSON string or JS object.',
+                          function() {
+    var destination = this.data.dest;
+    var template = mustache.compile(this.filesSrc, this.options());
+    grunt.file.write(destination, template);
+    if(this.options().verbose){
+      grunt.log.writeln('File "' + destination.yellow + '" created.');
     }
-
-    grunt.log.ok(String(templateCount).cyan + ' *.mustache templates baked into ' + _mustacheDest.yellow);
+    grunt.log.ok(mustache.count().cyan + ' *.mustache templates baked into ' + destination.yellow);
   });
-
-  // ==========================================================================
-  // CALLBACKS
-  // ==========================================================================
-
-  function mustacheCallback(abspath, filename, opts){
-    // loop thru all mustache-files: using filename for key, template contents as value
-    if(abspath.split('.').pop() === 'mustache'){
-      templateCount++;
-      templateContent += '"' + filename.split('.mustache')[0] + '"' + ' : \'' + grunt.file.read(abspath) + '\',';
-
-       if(opts.verbose){
-        grunt.log.writeln('Reading file: '.white + filename.yellow);
-      }
-    }
-  }
-
-
 };

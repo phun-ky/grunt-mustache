@@ -63,6 +63,12 @@ String to append the generated string. Defaults to `)` to give a valid JavaScrip
 
 Toggle for verbose output.
 
+#### keepTemplateSuffix
+* Type: `Boolean`
+* Defaults: `false`
+
+Whether to keep the `.mustache` filename suffix in the keys of the generated object. Default strips this suffix.
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][grunt].
 

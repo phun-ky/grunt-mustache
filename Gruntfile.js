@@ -1,15 +1,12 @@
 module.exports = function(grunt) {
-
   // Project configuration.
   grunt.initConfig({
     nodeunit: {
       all: ['test/test.js']
     },
-    lint: {
-      files: ['grunt.js', 'tasks/**/*.js', 'test/**/*.js']
-    },
     watch: {
-      files: '<config:lint.files>',
+      files: ['tasks/**/*.js',
+              'test/test.js'],
       tasks: 'default'
     },
     jshint: {
@@ -24,20 +21,21 @@ module.exports = function(grunt) {
         undef: true,
         boss: true,
         eqnull: true,
-        node: true,
-        es5: true
+        node: true
       },
-      globals: {}
+      all: ['Gruntfile.js',
+            'tasks',
+            'test/test.js']
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
+  // load all grunt tasks from package.json
+  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
   // Load local tasks.
   grunt.loadTasks('tasks');
 
   // Default task.
-  grunt.registerTask('default', 'lint');
+  grunt.registerTask('default', ['jshint', 'test']);
   grunt.registerTask('test', 'nodeunit');
-
 };
