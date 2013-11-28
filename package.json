@@ -1,7 +1,7 @@
 {
   "name": "grunt-mustache",
   "description": "A grunt plugin to concatinate mustache template files",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "homepage": "https://github.com/phun-ky/grunt-mustache",
   "author": {
     "name": "Alexander Vassbotn Røyne-Helgesen",
@@ -25,11 +25,11 @@
     }
   ],
   "dependencies": {
-    "colors": "~0.6.0-1"
+    "colors": "~0.6.2"
   },
   "devDependencies": {
-    "grunt": "~0.4.0rc6",
-    "grunt-contrib-nodeunit": "~0.1.2rc6"
+    "grunt": "~0.4.2",
+    "grunt-contrib-nodeunit": "~0.2.2"
   },
   "keywords": [
     "gruntplugin",

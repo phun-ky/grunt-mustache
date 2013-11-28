@@ -14,6 +14,14 @@ var templateCount = 0;
 
 var colors = require('colors');
 
+/**
+ * Require path plugin from node
+ *
+ * @var     Object
+ * @source  NodeJS
+ */
+var path          = require('path');
+
 module.exports = function(grunt) {
 
   // Please see the grunt documentation for more information regarding task and
@@ -39,11 +47,16 @@ module.exports = function(grunt) {
 
     this.filesSrc.forEach(function(file){
 
+      if(grunt.file.isFile(file)){
 
+        mustacheCallback(path.resolve(file), path.basename(file),_opts);
 
-      grunt.file.recurse( file, function(abspath, rootdir, subdir, filename){
-        mustacheCallback(abspath, filename,_opts);
-      });
+      } else {
+        grunt.file.recurse( file, function(abspath, rootdir, subdir, filename){
+          mustacheCallback(abspath, filename,_opts);
+        });
+      }
+
       // replace any tabs and linebreaks and double spaces
       _templateOutput += templateContent.replace( /\r|\n|\t|\s\s/g, '');
     });
