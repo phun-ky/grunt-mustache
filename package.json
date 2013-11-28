@@ -1,7 +1,7 @@
 {
   "name": "grunt-mustache",
   "description": "A grunt plugin to concatinate mustache template files",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "homepage": "https://github.com/phun-ky/grunt-mustache",
   "author": {
     "name": "Alexander Vassbotn Røyne-Helgesen",
