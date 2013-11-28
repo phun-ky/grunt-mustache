@@ -42,36 +42,60 @@ module.exports = function(grunt) {
     var _prefix           = _opts.prefix || '(';
     var _postfix          = _opts.postfix || ')';
 
-    
-    _templateOutput += _prefix + '{';
+    _templateOutput += _prefix + '{\n';
 
     this.filesSrc.forEach(function(file){
 
       if(grunt.file.isFile(file)){
 
+        if(grunt.option('verbose')){
+
+          grunt.log.writeln('Combing file: "' + path.normalize(file).yellow + '"');
+
+        }
+
         mustacheCallback(path.resolve(file), path.basename(file),_opts);
 
       } else {
+
+        if(grunt.option('verbose')){
+
+          grunt.log.writeln('Combing directory: "' + path.normalize(file).yellow + '"');
+
+        }
+
         grunt.file.recurse( file, function(abspath, rootdir, subdir, filename){
+
           mustacheCallback(abspath, filename,_opts);
+
         });
+
       }
 
       // replace any tabs and linebreaks and double spaces
-      _templateOutput += templateContent.replace( /\r|\n|\t|\s\s/g, '');
+      _templateOutput += "    " + templateContent.replace( /\r|\n|\t|\s\s/g, '') + "\n";
+
+      if(grunt.file.isFile(file)){
+
+        templateContent = '';
+
+      }
+
     });
 
     templateContent = '';
-    _templateOutput += ' "done": "true"}' + _postfix;
+    _templateOutput += '    "done": "true"\n  }' + _postfix;
 
     grunt.file.write(_mustacheDest, _templateOutput);
 
-    if(_opts.verbose){
+    if(grunt.option('verbose')){
 
-      grunt.log.writeln('File "' + _mustacheDest.yellow + '" created.');
+      grunt.log.writeln('File "' + path.normalize(_mustacheDest).yellow + '" created.');
+
     }
 
-    grunt.log.ok(String(templateCount).cyan + ' *.mustache templates baked into ' + _mustacheDest.yellow);
+    grunt.log.ok(String(templateCount).cyan + ' *.mustache templates baked into ' + path.normalize(_mustacheDest).yellow);
+
   });
 
   // ==========================================================================
@@ -79,13 +103,20 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   function mustacheCallback(abspath, filename, opts){
-    // loop thru all mustache-files: using filename for key, template contents as value
-    if(abspath.split('.').pop() === 'mustache'){
-      templateCount++;
-      templateContent += '"' + filename.split('.mustache')[0] + '"' + ' : \'' + grunt.file.read(abspath) + '\',';
 
-       if(opts.verbose){
+
+
+    // Loop through all *.mustache-files: using filename for key,
+    // template contents as value
+    if(abspath.split('.').pop() === 'mustache'){
+
+      templateCount++;
+      templateContent += '"' + filename.split('.mustache')[0] + '"' + ' : \'' + grunt.file.read(abspath) + '\','+"\n";
+
+      if(grunt.option('verbose')){
+
         grunt.log.writeln('Reading file: '.white + filename.yellow);
+
       }
     }
   }
