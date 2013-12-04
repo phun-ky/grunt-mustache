@@ -33,11 +33,9 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('mustache', 'Concat mustache templates into a JSON string or JS object.', function() {
     templateCount = 0;
+    templateContent = '';
 
-    // Normalize the data object
-    this.data = this.data.files || this.data;
-
-    var _mustacheDest     = this.data.dest;
+    var _mustacheDest     = this.data.files.dest || this.data.dest;
     var _templateOutput   = '';
 
     var _opts = this.options();
