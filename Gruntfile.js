@@ -5,14 +5,12 @@ module.exports = function(grunt) {
     nodeunit: {
       all: ['test/test.js']
     },
-    lint: {
-      files: ['grunt.js', 'tasks/**/*.js', 'test/**/*.js']
-    },
-    watch: {
-      files: '<config:lint.files>',
-      tasks: 'default'
-    },
+    
     jshint: {
+      all: [
+        'Gruntfile.js',
+        'tasks/*.js'
+      ],
       options: {
         curly: true,
         eqeqeq: true,
@@ -24,20 +22,25 @@ module.exports = function(grunt) {
         undef: true,
         boss: true,
         eqnull: true,
-        node: true,
-        es5: true
-      },
-      globals: {}
+        node: true
+      }
+    },
+
+    watch: {
+      files: '<config:lint.files>',
+      tasks: 'default'
     }
+
   });
 
+  grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
   // Load local tasks.
   grunt.loadTasks('tasks');
 
   // Default task.
-  grunt.registerTask('default', 'lint');
+  grunt.registerTask('default', 'jshint');
   grunt.registerTask('test', 'nodeunit');
 
 };
