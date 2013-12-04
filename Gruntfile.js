@@ -34,13 +34,13 @@ module.exports = function(grunt) {
     mustache: {
       without_prefix: {
         files: {
-          src: 'test/include/without_prefix',
+          src: 'test/include/',
           dest: 'tmp/templates_without_prefix.js'
         }
       },
       with_prefix: {
         files: {
-          src: 'test/include/with_prefix',
+          src: 'test/include/',
           dest: 'tmp/templates_with_prefix.js'
         },
         options: {
@@ -49,7 +49,7 @@ module.exports = function(grunt) {
       },
       with_prefix_and_postfix: {
         files: {
-          src: 'test/include/with_prefix_and_postfix',
+          src: 'test/include/',
           dest: 'tmp/templates_with_prefix_and_postfix.js'
         },
         options: {
