@@ -2,6 +2,11 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
+
+    clean: {
+      default: ['tmp'],
+    },
+
     nodeunit: {
       all: ['test/test.js']
     },
@@ -62,13 +67,14 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
   // Load local tasks.
   grunt.loadTasks('tasks');
 
   // Default task.
-  grunt.registerTask('default', ['mustache:without_prefix', 'mustache:with_prefix', 'mustache:with_prefix_and_postfix', 'test']);
+  grunt.registerTask('default', ['clean', 'mustache:without_prefix', 'mustache:with_prefix', 'mustache:with_prefix_and_postfix', 'test']);
   grunt.registerTask('test', ['nodeunit']);
 
 };
