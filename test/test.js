@@ -6,22 +6,35 @@ var grunt = require('grunt');
 exports.nodeunit = {
   check_simple_template: function(test) {
     var actual = grunt.file.read('tmp/templates_without_prefix.js');
-    var expected = grunt.file.read('test/expected/templates_without_prefix.js');
-    test.equal(actual, expected);
+    var ctx = eval(actual);
+    test.ok(ctx.template1, "should have the template 1 inside the global object");
+    test.ok(ctx.template2, "should have the template 2 inside the global object");
     test.done();
   },
 
   check_template_with_prefix: function(test) {
-    var actual = grunt.file.read('tmp/templates_with_prefix.js');
-    var expected = grunt.file.read('test/expected/templates_with_prefix.js');
-    test.equal(actual, expected);
+    var actual = grunt.file.read('tmp/templates_with_prefix.js'),
+        ctx = null,
+        prefix = "some_prefix",
+        some_prefix;
+
+    eval(actual);
+
+    test.ok(some_prefix.template1, "should have the template 1");
+    test.ok(some_prefix.template2, "should have the template 2");
     test.done();
   },
 
   check_template_with_prefix_and_postfix: function (test) {
-    var actual = grunt.file.read('tmp/templates_with_prefix_and_postfix.js');
-    var expected = grunt.file.read('test/expected/templates_with_prefix_and_postfix.js');
-    test.equal(actual, expected);
+    var actual = grunt.file.read('tmp/templates_with_prefix_and_postfix.js'),
+        ctx = null,
+        prefix = "some_prefix",
+        some_prefix;
+
+    eval(actual);
+
+    test.ok(some_prefix.template1, "should have the template 1");
+    test.ok(some_prefix.template2, "should have the template 2");
     test.done();
   }
 };
