@@ -32,6 +32,10 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   grunt.registerMultiTask('mustache', 'Concat mustache templates into a JSON string or JS object.', function() {
+    templateCount = 0;
+
+    // Normalize the data object
+    this.data = this.data.files || this.data;
 
     var _mustacheDest     = this.data.dest;
     var _templateOutput   = '';
@@ -103,8 +107,6 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   function mustacheCallback(abspath, filename, opts){
-
-
 
     // Loop through all *.mustache-files: using filename for key,
     // template contents as value
