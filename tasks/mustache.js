@@ -42,7 +42,11 @@ module.exports = function(grunt) {
 
     // Set *fixes, if not set, use () to produce correct JavaScript syntax
     var _prefix           = _opts.prefix || '(';
-    var _postfix          = _opts.postfix || ')';
+    var _postfix          = _opts.postfix || '';
+
+    if( _prefix === '(') {
+      _postfix = ')' + _postfix;
+    }
 
     _templateOutput += _prefix + '{\n';
 
@@ -87,6 +91,10 @@ module.exports = function(grunt) {
 
     templateContent = '';
     _templateOutput += '    "done": "true"\n  }' + _postfix;
+
+    if( _prefix === '(') {
+      _postfix = ')' + _postfix;
+    }
 
     grunt.file.write(_mustacheDest, _templateOutput);
 
