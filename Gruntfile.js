@@ -5,7 +5,7 @@ module.exports = function(grunt) {
     nodeunit: {
       all: ['test/test.js']
     },
-    
+
     jshint: {
       all: [
         'Gruntfile.js',
@@ -26,6 +26,34 @@ module.exports = function(grunt) {
       }
     },
 
+    mustache: {
+      without_prefix: {
+        files: {
+          src: 'test/include/without_prefix',
+          dest: 'tmp/templates_without_prefix.js'
+        }
+      },
+      with_prefix: {
+        files: {
+          src: 'test/include/with_prefix',
+          dest: 'tmp/templates_with_prefix.js'
+        },
+        options: {
+          prefix: 'some_prefix = '
+        }
+      },
+      with_prefix_and_postfix: {
+        files: {
+          src: 'test/include/with_prefix_and_postfix',
+          dest: 'tmp/templates_with_prefix_and_postfix.js'
+        },
+        options: {
+          prefix: 'some_prefix = ',
+          postfix: ';'
+        }
+      }
+    },
+
     watch: {
       files: '<config:lint.files>',
       tasks: 'default'
@@ -40,7 +68,7 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
 
   // Default task.
-  grunt.registerTask('default', 'jshint');
-  grunt.registerTask('test', 'nodeunit');
+  grunt.registerTask('default', ['mustache:without_prefix', 'mustache:with_prefix', 'mustache:with_prefix_and_postfix', 'test']);
+  grunt.registerTask('test', ['nodeunit']);
 
 };
