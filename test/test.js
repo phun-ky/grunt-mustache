@@ -7,6 +7,7 @@ exports.nodeunit = {
   check_simple_template: function(test) {
     var actual = grunt.file.read('tmp/templates_without_prefix.js');
     var ctx = eval(actual);
+
     test.ok(ctx.template1, "should have the template 1 inside the global object");
     test.ok(ctx.template2, "should have the template 2 inside the global object");
     test.done();
@@ -36,5 +37,18 @@ exports.nodeunit = {
     test.ok(some_prefix.template1, "should have the template 1");
     test.ok(some_prefix.template2, "should have the template 2");
     test.done();
+  },
+
+  "check template with a different extension than mustache will be parsed": function (test) {
+    var actual = grunt.file.read('tmp/templates_with_different_extension.js'),
+        ctx = null,
+        prefix = "some_prefix",
+        some_prefix;
+
+    eval(actual);
+
+    test.ok(some_prefix.template1, "should have the template 1");
+    test.ok(some_prefix.template2, "should have the template 2");
+    test.done(); 
   }
 };
