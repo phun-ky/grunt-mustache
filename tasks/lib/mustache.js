@@ -21,7 +21,7 @@ exports.init = function (grunt) {
                 templates = '';
 
             if( prefix === '(') {
-              postfix = ')' + postfix;
+              postfix = ');' + postfix;
             }
 
             var isTemplate = function (abspath) {
