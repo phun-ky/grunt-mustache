@@ -36,12 +36,18 @@ exports.init = function (grunt) {
                 return filename.split(file_extension)[0];
             };
 
+            var replace_single_quotes = function (content) {
+                return content.replace(/'/g, "\\'");
+            };
+
             var templateHandler = function(abspath, rootdir, subdir, filename) {
                 if(! isTemplate(abspath) ) {
                     return;
                 }
                 templateCount += 1;
-                templates += '"' + templateName(filename) + '"' + ' : \'' + grunt.file.read(abspath) + '\','+"\n";
+                var file_content = grunt.file.read(abspath);
+                file_content = replace_single_quotes(file_content)
+                templates += '"' + templateName(filename) + '"' + ' : \'' + file_content + '\','+"\n";
                 
                 if (options.verbose) {
                     grunt.log.writeln('Reading file: '.white + filename.yellow);
