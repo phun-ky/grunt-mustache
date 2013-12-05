@@ -34,13 +34,13 @@ module.exports = function(grunt) {
     mustache: {
       without_prefix: {
         files: {
-          src: 'test/include/',
+          src: 'test/fixture/mustache_files',
           dest: 'tmp/templates_without_prefix.js'
         }
       },
       with_prefix: {
         files: {
-          src: 'test/include/',
+          src: 'test/fixture/mustache_files',
           dest: 'tmp/templates_with_prefix.js'
         },
         options: {
@@ -49,12 +49,23 @@ module.exports = function(grunt) {
       },
       with_prefix_and_postfix: {
         files: {
-          src: 'test/include/',
+          src: 'test/fixture/mustache_files',
           dest: 'tmp/templates_with_prefix_and_postfix.js'
         },
         options: {
           prefix: 'some_prefix = ',
           postfix: ';'
+        }
+      },
+      with_different_extension: {
+        files: {
+          src: 'test/fixture/mu_files',
+          dest: 'tmp/templates_with_different_extension.js'
+        },
+        options: {
+          prefix: 'some_prefix = ',
+          postfix: ';',
+          extension: 'mu'
         }
       }
     },
@@ -74,7 +85,7 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
 
   // Default task.
-  grunt.registerTask('default', ['clean', 'mustache:without_prefix', 'mustache:with_prefix', 'mustache:with_prefix_and_postfix', 'test']);
+  grunt.registerTask('default', ['clean', 'mustache:without_prefix', 'mustache:with_prefix', 'mustache:with_prefix_and_postfix', 'mustache:with_different_extension', 'test']);
   grunt.registerTask('test', ['nodeunit']);
 
 };

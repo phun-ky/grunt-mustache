@@ -11,7 +11,7 @@
 
 var templateContent = '';
 var templateCount = 0;
-
+var extension = '';
 var colors = require('colors');
 
 /**
@@ -39,6 +39,8 @@ module.exports = function(grunt) {
     var _templateOutput   = '';
 
     var _opts = this.options();
+
+    extension = _opts.extension || 'mustache';
 
     // Set *fixes, if not set, use () to produce correct JavaScript syntax
     var _prefix           = _opts.prefix || '(';
@@ -104,7 +106,7 @@ module.exports = function(grunt) {
 
     }
 
-    grunt.log.ok(String(templateCount).cyan + ' *.mustache templates baked into ' + path.normalize(_mustacheDest).yellow);
+    grunt.log.ok(String(templateCount).cyan + ' *. templates baked into ' + path.normalize(_mustacheDest).yellow);
 
   });
 
@@ -116,10 +118,10 @@ module.exports = function(grunt) {
 
     // Loop through all *.mustache-files: using filename for key,
     // template contents as value
-    if(abspath.split('.').pop() === 'mustache'){
-
+    if(abspath.split('.').pop() === extension){
+      var file_extension = '.' + extension;
       templateCount++;
-      templateContent += '"' + filename.split('.mustache')[0] + '"' + ' : \'' + grunt.file.read(abspath) + '\','+"\n";
+      templateContent += '"' + filename.split(file_extension)[0] + '"' + ' : \'' + grunt.file.read(abspath) + '\','+"\n";
 
       if(grunt.option('verbose')){
 
