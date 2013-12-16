@@ -52,7 +52,6 @@ exports.init = function (grunt) {
                             keyArray[i][1] += 1;
                             this.keyIndex = this.keyArray[i][1];
                             found =true;
-                            console.log("found:" +this.keyIndex);
                             break;
                         };
                     }
@@ -62,7 +61,6 @@ exports.init = function (grunt) {
                         newKey[0] = key;
                         newKey[1] = 0;
                         this.keyArray.push(newKey);
-                        console.log(this.keyArray);
                     };
                 };
             };
