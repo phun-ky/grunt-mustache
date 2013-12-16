@@ -47,8 +47,20 @@ exports.nodeunit = {
 
     eval(actual);
 
+//console.log(some_prefix.template3.inStart1);
     test.ok(some_prefix.template1, "should have the template 1");
     test.ok(some_prefix.template2, "should have the template 2");
+    test.ok(some_prefix.template3.base, "should have template 3 base");
+    test.equal(some_prefix.template3.base, '<div>{{start}}<span>sometext</span>{{inStart}}{{end}}</div>', 'base should have the correct content');
+    test.ok(some_prefix.template3.start, "should have template 3 start");
+    test.equal(some_prefix.template3.start, '<h1>start</h1>{{inStart1}}', 'start should have the correct content');
+    test.ok(some_prefix.template3.end, "should have template 3 end");
+    test.equal(some_prefix.template3.end, '<h1>end</h1>', 'end should have the correct content');
+    test.ok(some_prefix.template3.inStart, "should have template 3 instart");
+    test.equal(some_prefix.template3.inStart, '<p>inStart again</p>', 'inStart should have the correct content');
+    test.ok(some_prefix.template3.inStart1, "should have template 3 instart1");
+    test.equal(some_prefix.template3.inStart1, '<p>inStart</p>', 'inStart1 should have the correct content');
+    
     test.done(); 
   }
 };
