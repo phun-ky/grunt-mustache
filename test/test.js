@@ -60,7 +60,21 @@ exports.nodeunit = {
     test.equal(some_prefix.template3.inStart, '<p>inStart again</p>', 'inStart should have the correct content');
     test.ok(some_prefix.template3.inStart1, "should have template 3 instart1");
     test.equal(some_prefix.template3.inStart1, '<p>inStart</p>', 'inStart1 should have the correct content');
-    
-    test.done(); 
+
+    test.done();
+  },
+
+  "templates with dashes in the file name are replaced by underscores": function(test) {
+    var actual = grunt.file.read('tmp/templates_with_underscores.js');
+
+    var ctx = eval(actual);
+
+    test.ok(ctx.template_underscore_1, "should have template_underscore_1, not template-underscore-1");
+    test.ok(ctx.template_underscore_2, "should have template_underscore_2, not template-underscore-2");
+
+    test.equal(ctx.template_underscore_1, '<div>Hello world!</div>', "should have template_underscore_1, not template-underscore-1");
+    test.equal(ctx.template_underscore_2, '<div>Hello people!</div>', "should have template_underscore_2, not template-underscore-2");
+
+    test.done();
   }
 };

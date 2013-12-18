@@ -67,6 +67,16 @@ module.exports = function(grunt) {
           postfix: ';',
           extension: 'mu'
         }
+      },
+
+      with_dashes: {
+        files: {
+          src: 'test/fixture/templates_with_dashes',
+          dest: 'tmp/templates_with_underscores.js'
+        },
+        options: {
+          extension: 'mu'
+        }
       }
     },
 
@@ -85,7 +95,7 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
 
   // Default task.
-  grunt.registerTask('default', ['clean', 'mustache:without_prefix', 'mustache:with_prefix', 'mustache:with_prefix_and_postfix', 'mustache:with_different_extension', 'test']);
+  grunt.registerTask('default', ['clean', 'mustache:without_prefix', 'mustache:with_prefix', 'mustache:with_prefix_and_postfix', 'mustache:with_different_extension', 'mustache:with_dashes', 'test']);
   grunt.registerTask('test', ['nodeunit']);
 
 };
