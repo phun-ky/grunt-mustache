@@ -1,4 +1,8 @@
-# grunt-mustache [![Build Status](https://travis-ci.org/phun-ky/grunt-mustache.png)](https://travis-ci.org/phun-ky/grunt-mustache)
+# grunt-mustache 
+
+[![Build Status](https://travis-ci.org/phun-ky/grunt-mustache.png)](https://travis-ci.org/phun-ky/grunt-mustache)
+[![Dependency Status](https://gemnasium.com/phun-ky/grunt-mustache.png)](https://gemnasium.com/phun-ky/grunt-mustache)
+[![NPM version](https://badge.fury.io/js/grunt-mustache.png)](http://badge.fury.io/js/grunt-mustache)
 
 > A grunt plugin to concatinate mustache template files into a valid JavaScript syntax file.
 
