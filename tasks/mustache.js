@@ -20,106 +20,113 @@ var colors = require('colors');
  * @var     Object
  * @source  NodeJS
  */
-var path          = require('path');
+var path = require('path');
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
-  // Please see the grunt documentation for more information regarding task and
-  // helper creation: https://github.com/cowboy/grunt/blob/master/docs/toc.md
+    // Please see the grunt documentation for more information regarding task and
+    // helper creation: https://github.com/cowboy/grunt/blob/master/docs/toc.md
 
-  // ==========================================================================
-  // TASKS
-  // ==========================================================================
+    // ==========================================================================
+    // TASKS
+    // ==========================================================================
 
-  grunt.registerMultiTask('mustache', 'Concat mustache templates into a JSON string or JS object.', function() {
+    grunt.registerMultiTask('mustache', 'Concat mustache templates into a JSON string or JS object.', function () {
 
-    var _mustacheDest     = this.data.dest;
-    var _templateOutput   = '';
+        var _templateOutput = '';
 
-    var _opts = this.options();
+        var _opts = this.options();
 
-    // Set *fixes, if not set, use () to produce correct JavaScript syntax
-    var _prefix           = _opts.prefix || '(';
-    var _postfix          = _opts.postfix || ')';
+        // Set *fixes, if not set, use () to produce correct JavaScript syntax
+        var _prefix = _opts.prefix || '(';
+        var _postfix = _opts.postfix || ')';
 
-    _templateOutput += _prefix + '{\n';
+        _templateOutput += _prefix + '{\n';
 
-    this.filesSrc.forEach(function(file){
+        this.filesSrc.forEach(function (file) {
 
-      if(grunt.file.isFile(file)){
+            if (grunt.file.isFile(file)) {
 
-        if(grunt.option('verbose')){
+                if (grunt.option('verbose')) {
 
-          grunt.log.writeln('Combing file: "' + path.normalize(file).yellow + '"');
+                    grunt.log.writeln('Combing file: "' + path.normalize(file).yellow + '"');
 
-        }
+                }
 
-        mustacheCallback(path.resolve(file), path.basename(file),_opts);
+                mustacheCallback(path.resolve(file), path.basename(file), _opts);
 
-      } else {
+            } else {
 
-        if(grunt.option('verbose')){
+                if (grunt.option('verbose')) {
 
-          grunt.log.writeln('Combing directory: "' + path.normalize(file).yellow + '"');
+                    grunt.log.writeln('Combing directory: "' + path.normalize(file).yellow + '"');
 
-        }
+                }
 
-        grunt.file.recurse( file, function(abspath, rootdir, subdir, filename){
+                grunt.file.recurse(file, function (abspath, rootdir, subdir, filename) {
 
-          mustacheCallback(abspath, filename,_opts);
+                    mustacheCallback(abspath, filename, _opts);
+
+                });
+
+            }
+
+            // replace any tabs and linebreaks and double spaces
+            _templateOutput += "    " + templateContent.replace(/\r|\n|\t|\s\s/g, '') + "\n";
+
+            if (grunt.file.isFile(file)) {
+
+                templateContent = '';
+
+            }
 
         });
 
-      }
-
-      // replace any tabs and linebreaks and double spaces
-      _templateOutput += "    " + templateContent.replace( /\r|\n|\t|\s\s/g, '') + "\n";
-
-      if(grunt.file.isFile(file)){
-
         templateContent = '';
+        _templateOutput += '    "done": "true"\n  }' + _postfix;
 
-      }
+        if (typeof this.files === 'object') {
+
+            this.files.forEach(function (f) {
+
+                var _mustacheDest = f.dest;
+
+                grunt.file.write(_mustacheDest, _templateOutput);
+
+                if (grunt.option('verbose')) {
+
+                    grunt.log.writeln('File "' + path.normalize(_mustacheDest).yellow + '" created.');
+
+                }
+
+                grunt.log.ok(String(templateCount).cyan + ' *.mustache templates baked into ' + path.normalize(_mustacheDest).yellow);
+
+            });
+
+        }
+
 
     });
 
-    templateContent = '';
-    _templateOutput += '    "done": "true"\n  }' + _postfix;
+    // ==========================================================================
+    // CALLBACKS
+    // ==========================================================================
 
-    grunt.file.write(_mustacheDest, _templateOutput);
+    function mustacheCallback(abspath, filename, opts) {
 
-    if(grunt.option('verbose')){
+        // Loop through all *.mustache-files: using filename for key,
+        // template contents as value
+        if (abspath.split('.').pop() === 'mustache') {
 
-      grunt.log.writeln('File "' + path.normalize(_mustacheDest).yellow + '" created.');
+            templateCount++;
+            templateContent += '"' + filename.split('.mustache')[0] + '"' + ' : \'' + grunt.file.read(abspath) + '\',' + "\n";
 
+            if (grunt.option('verbose')) {
+
+                grunt.log.writeln('Reading file: '.white + filename.yellow);
+
+            }
+        }
     }
-
-    grunt.log.ok(String(templateCount).cyan + ' *.mustache templates baked into ' + path.normalize(_mustacheDest).yellow);
-
-  });
-
-  // ==========================================================================
-  // CALLBACKS
-  // ==========================================================================
-
-  function mustacheCallback(abspath, filename, opts){
-
-
-
-    // Loop through all *.mustache-files: using filename for key,
-    // template contents as value
-    if(abspath.split('.').pop() === 'mustache'){
-
-      templateCount++;
-      templateContent += '"' + filename.split('.mustache')[0] + '"' + ' : \'' + grunt.file.read(abspath) + '\','+"\n";
-
-      if(grunt.option('verbose')){
-
-        grunt.log.writeln('Reading file: '.white + filename.yellow);
-
-      }
-    }
-  }
-
 
 };
