@@ -86,15 +86,25 @@ module.exports = function(grunt) {
     templateContent = '';
     _templateOutput += '    "done": "true"\n  }' + _postfix;
 
-    grunt.file.write(_mustacheDest, _templateOutput);
+      if (typeof this.files === 'object') {
 
-    if(grunt.option('verbose')){
+          this.files.forEach(function (f) {
 
-      grunt.log.writeln('File "' + path.normalize(_mustacheDest).yellow + '" created.');
+              var _mustacheDest = f.dest;
 
-    }
+              grunt.file.write(_mustacheDest, _templateOutput);
 
-    grunt.log.ok(String(templateCount).cyan + ' *.mustache templates baked into ' + path.normalize(_mustacheDest).yellow);
+              if (grunt.option('verbose')) {
+
+                  grunt.log.writeln('File "' + path.normalize(_mustacheDest).yellow + '" created.');
+
+              }
+
+              grunt.log.ok(String(templateCount).cyan + ' *.mustache templates baked into ' + path.normalize(_mustacheDest).yellow);
+
+          });
+
+      }
 
   });
 
