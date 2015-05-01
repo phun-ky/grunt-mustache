@@ -111,7 +111,10 @@ module.exports = function(grunt) {
     if(abspath.split('.').pop() === 'mustache'){
 
       templateCount++;
-      templateContent += '"' + filename.split('.mustache')[0] + '"' + ' : "' + grunt.file.read(abspath) + '",'+"\n";
+      var escapeDoubleQuotes = grunt.file.read(abspath).replace(/"/g, '\\"');
+      var fileContent = escapeDoubleQuotes.replace(/\\\\/g, '\\'); // escape escaped characters
+
+      templateContent += '"' + filename.split('.mustache')[0] + '"' + ' : "' + fileContent + '",'+"\n";
 
       if(grunt.option('verbose')){
 
