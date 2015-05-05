@@ -72,8 +72,7 @@ module.exports = function(grunt) {
 
       }
 
-      // replace any tabs and linebreaks and double spaces
-      _templateOutput += "    " + templateContent.replace( /\r|\n|\t|\s\s/g, '') + "\n";
+      _templateOutput += templateContent;
 
       if(grunt.file.isFile(file)){
 
@@ -112,9 +111,11 @@ module.exports = function(grunt) {
 
       templateCount++;
       var escapeDoubleQuotes = grunt.file.read(abspath).replace(/"/g, '\\"');
-      var fileContent = escapeDoubleQuotes.replace(/\\\\/g, '\\'); // escape escaped characters
+      var escapeEscapedCharacters = escapeDoubleQuotes.replace(/\\\\/g, '\\');
+      var fileContent =  escapeEscapedCharacters.replace( /\r|\n|\t|\s\s/g, ''); // Removes line breaks and double spaces
 
-      templateContent += '"' + filename.split('.mustache')[0] + '"' + ' : "' + fileContent + '",'+"\n";
+
+      templateContent += '    "' + filename.split('.mustache')[0] + '"' + ' : "' + fileContent + '",' + "\n";
 
       if(grunt.option('verbose')){
 
