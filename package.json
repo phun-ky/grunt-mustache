@@ -9,7 +9,7 @@
     "url": "http://phun-ky.net"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt && grunt test"
   },
   "repository": {
     "type": "git",
