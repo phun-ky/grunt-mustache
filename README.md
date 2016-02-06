@@ -1,5 +1,6 @@
 # grunt-mustache 
 
+[![Retire Status](http://retire.insecurity.today/api/image?uri=https://raw.githubusercontent.com/phun-ky/grunt-mustache/master/package.json)](http://retire.insecurity.today/api/image?uri=https://raw.githubusercontent.com/phun-ky/grunt-mustache/master/package.json)
 [![Build Status](https://travis-ci.org/phun-ky/grunt-mustache.png)](https://travis-ci.org/phun-ky/grunt-mustache)
 [![Dependency Status](https://gemnasium.com/phun-ky/grunt-mustache.png)](https://gemnasium.com/phun-ky/grunt-mustache)
 [![NPM version](https://badge.fury.io/js/grunt-mustache.png)](http://badge.fury.io/js/grunt-mustache)
