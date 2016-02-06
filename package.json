@@ -25,7 +25,9 @@
     }
   ],
   "dependencies": {
-    "colors": "~0.6.2"
+    "colors": "~0.6.2",
+    "grunt": "^0.4.5",
+    "lodash": "^4.2.1"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
