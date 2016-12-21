@@ -10,6 +10,10 @@
 This plugin does *NOT* bake JSON data with mustache templates. This plugin is created to handle the template baking with mustache/handlebars
 within a web projects internal JavaScript methods.
 
+## No more development
+
+I will no longer develop this plugin any further and I strongly suggest users of this plugin to either fork it and continue the development on their hand, or [find another](https://www.npmjs.com/search?q=grunt+mustache) plugin.
+
 ## Getting Started
 Install this grunt plugin next to your project's [Gruntfile.js][getting_started] with: 
 
