@@ -37,12 +37,92 @@ module.exports = function(grunt) {
 
     grunt.file.write(destination, template);
 
-    if ( this.options().verbose) {
-      grunt.log.writeln('File "' + destination.yellow + '" created');
+    // Set *fixes, if not set, use () to produce correct JavaScript syntax
+    var _prefix           = _opts.prefix || '(';
+    var _postfix          = _opts.postfix || ')';
+
+    _templateOutput += _prefix + '{\n';
+
+    this.filesSrc.forEach(function(file){
+
+      if(grunt.file.isFile(file)){
+
+        if(grunt.option('verbose')){
+
+          grunt.log.writeln('Combing file: "' + path.normalize(file).yellow + '"');
+
+        }
+
+        mustacheCallback(path.resolve(file), path.basename(file),_opts);
+
+      } else {
+
+        if(grunt.option('verbose')){
+
+          grunt.log.writeln('Combing directory: "' + path.normalize(file).yellow + '"');
+
+        }
+
+        grunt.file.recurse( file, function(abspath, rootdir, subdir, filename){
+
+          mustacheCallback(abspath, filename,_opts);
+
+        });
+
+      }
+
+      _templateOutput += templateContent;
+
+      if(grunt.file.isFile(file)){
+
+        templateContent = '';
+
+      }
+
+    });
+
+    templateContent = '';
+    _templateOutput += '    "done": "true"\n  }' + _postfix;
+
+    grunt.file.write(_mustacheDest, _templateOutput);
+
+    if(grunt.option('verbose')){
+
+      grunt.log.writeln('File "' + path.normalize(_mustacheDest).yellow + '" created.');
+
     }
 
     grunt.log.ok(mustache.count().cyan + ' *.mustache templates baked into ' + destination.yellow);
 
   });
+
+  // ==========================================================================
+  // CALLBACKS
+  // ==========================================================================
+
+  function mustacheCallback(abspath, filename, opts){
+
+
+
+    // Loop through all *.mustache-files: using filename for key,
+    // template contents as value
+    if(abspath.split('.').pop() === 'mustache'){
+
+      templateCount++;
+      var escapeDoubleQuotes = grunt.file.read(abspath).replace(/"/g, '\\"');
+      var escapeEscapedCharacters = escapeDoubleQuotes.replace(/\\\\/g, '\\');
+      var fileContent =  escapeEscapedCharacters.replace( /\r|\n|\t|\s\s/g, ''); // Removes line breaks and double spaces
+
+
+      templateContent += '    "' + filename.split('.mustache')[0] + '"' + ' : "' + fileContent + '",' + "\n";
+
+      if(grunt.option('verbose')){
+
+        grunt.log.writeln('Reading file: '.white + filename.yellow);
+
+      }
+    }
+  }
+
 
 };
